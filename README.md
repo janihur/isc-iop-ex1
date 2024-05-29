@@ -22,11 +22,53 @@ Implement support for at least two of the following families. You can also use o
 
 There have to be also a valid family returning "not implemented yet" error, see examples below.
 
+## WireMock
+
+Emulate one of the APIs above with [WireMock](https://wiremock.org/) or invent your own API.
+
+Get the [WireMock Standalone](https://wiremock.org/docs/download-and-installation/#direct-download) and drop it into your preferred location.
+
+WireMock already has an example API (`/status` and `/joke`) configured in `wiremock/` directory. Put your JSON stub configuration files there. See [Stubbing](https://wiremock.org/docs/stubbing/) for further details.
+
+How to run WireMock:
+```
+java -jar <LOCATION>/wiremock-standalone.jar --verbose --disable-gzip --global-response-templating --root-dir ./wiremock/
+```
+
+How to try the API:
+```
+$ curl --include localhost:8080/status
+HTTP/1.1 200 OK
+Content-Type: application/json
+X-Clacks-Overhead: GNU Terry Pratchett
+Matched-Stub-Id: b0e9e6a8-59a5-4204-a153-ec92c36bc2e6
+Transfer-Encoding: chunked
+
+{"status":"OK"}
+```
+
+```
+$ curl --include localhost:8080/joke/1
+HTTP/1.1 200 OK
+Content-Type: application/json
+X-Clacks-Overhead: GNU Terry Pratchett
+Matched-Stub-Id: 1b941e39-b965-47af-a113-79a19adf819e
+Transfer-Encoding: chunked
+
+{
+    "id": "1",
+    "joke": {
+        "language": "en",
+        "text": "Why did the tomato turn red? Because it saw the salad dressing!"
+    }
+}
+```
+
+
 ## TODO
 
-Things still missing from the exercise description:
+Things still missing from the exercise:
 
-* Add WireMock that retuns a random joke.
 * Production skeleton.
 
 ## Examples
@@ -54,7 +96,7 @@ Valid family, but not impelemented yet:
 ```
 NAMESPACE>do ##class(IOP.Jokes.Runner).Run("baconipsum")
 IOP.Jokes.Error:
-{"Description":"Not implemented yet. Family: baconipsum","Time":"2024-05-27T04:30:08Z"}
+{"Description":"Not implemented yet. Family: \"baconipsum\"","Time":"2024-05-27T04:30:08Z"}
 ```
 
 Invalid amount:

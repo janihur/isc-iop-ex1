@@ -1,0 +1,25 @@
+{
+    "mappings": [
+        {
+            "priority": 10,
+            "request": {
+                "method": "ANY",
+                "urlPathPattern": ".*"
+            },
+            "response": {
+                "status": 404,
+                "headers": {
+                    "Content-Type": "application/json",
+                    "X-Clacks-Overhead": "GNU Terry Pratchett"
+                },
+                "jsonBody": {
+                    "error": "No mapping found for request.",
+                    "request": {
+                        "method": "{{request.method}}",
+                        "url": "{{request.url}}"
+                    }
+                }
+            }
+        }
+    ]
+}

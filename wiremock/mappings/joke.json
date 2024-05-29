@@ -1,0 +1,18 @@
+{
+    "mappings": [
+        {
+            "request": {
+                "method": "GET",
+                "urlPathPattern": "/joke/[123]"
+            },
+            "response": {
+                "status": 200,
+                "headers": {
+                    "Content-Type": "application/json",
+                    "X-Clacks-Overhead": "GNU Terry Pratchett"
+                },
+                "bodyFileName": "joke-{{request.pathSegments.[1]}}.json"
+            }
+        }
+    ]
+}
