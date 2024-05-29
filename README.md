@@ -22,6 +22,17 @@ Implement support for at least two of the following families. You can also use o
 
 There have to be also a valid family returning "not implemented yet" error, see examples below.
 
+## Production Skeleton
+
+`src/` directory has a production skeleton that provides the starting point. You have to fill the gaps marked with `// TODO`. Please see the [sequence diagram](sequence-diagram.svg) that describes the expected behaviour.
+
+You can import and compile the skeleton with following command:
+```
+NAMESPACE>do $system.OBJ.ImportDir("<LOCATION>/isc-iop-ex1/src/",,"/compile=1",,1)
+```
+
+where `<LOCATION>` is the directory where you have this repository.
+
 ## WireMock
 
 Emulate one of the APIs above with [WireMock](https://wiremock.org/) or invent your own API.
@@ -63,13 +74,6 @@ Transfer-Encoding: chunked
     }
 }
 ```
-
-
-## TODO
-
-Things still missing from the exercise:
-
-* Production skeleton.
 
 ## Examples
 

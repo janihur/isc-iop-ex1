@@ -5,28 +5,28 @@ sequenceDiagram
 autonumber
 
 actor user
-participant runner as IOP.Jokes.<br/>Runner
+participant runner as <<ObjectScript Class>><br/>IOP.Jokes.<br/>Runner
 
 user ->> runner: Run(family, amount)
 
-create participant processingrequest as IOP.Jokes.<br/>Messages.ProcessingRequest
+create participant processingrequest as <<Message>><br/>IOP.Jokes.<br/>Messages.ProcessingRequest
 runner ->> processingrequest: %New()
 processingrequest -->> runner: processingRequest
 
 note over runner: convert method parameters to processingRequest
 
-create participant service as IOP.Jokes.<br/>Services.Main
+create participant service as <<Business Service>><br/>IOP.Jokes.<br/>Services.Main
 runner ->> service: CreateBusinessService()
 service -->> runner: business service
 runner ->> service: ProcessInput(processingRequest, processingResponse)
 
-participant process as IOP.Jokes.<br/>Processes.Main
+participant process as <<Business Process>><br/>IOP.Jokes.<br/>Processes.Main
 service ->> process: SendRequestSync(processingRequest, processingResponse)
 
 %% -----------------------------------------------------------------------------
 
 note over process: validate processingRequest properties
-create participant operatingrequest as IOP.Jokes.<br/>Messages.OperatingRequest
+create participant operatingrequest as <<Message>><br/>IOP.Jokes.<br/>Messages.OperatingRequest
 process ->> operatingrequest: %New()
 operatingrequest -->> process: operatingRequest
 
@@ -40,20 +40,20 @@ end
 
 %% -----------------------------------------------------------------------------
 
-participant simpsons as IOP.Jokes.<br/>Operations.Simpsons
-participant simpsonsapi as thesimpsonsquoteapi.glitch.me
+participant simpsons as <<Business Operation>><br/>IOP.Jokes.<br/>Operations.Simpsons
+participant simpsonsapi as <<3rd Party API>><br/>thesimpsonsquoteapi.glitch.me
 
 opt processingRequest.Family is simpsons
   process ->> simpsons: SendRequestSync(operatingRequest, operatingResponse)
   note over simpsons: convert  operatingRequest to HTTP request parameters
   simpsons ->> simpsonsapi: GET /quotes
   simpsonsapi -->> simpsons: %Net.HttpResponse
-  create participant operatingresponse as IOP.Jokes.<br/>Messages.OperatingResponse
+  create participant operatingresponse as <<Message>><br/>IOP.Jokes.<br/>Messages.OperatingResponse
   simpsons ->> operatingresponse: %New()
   operatingresponse -->> simpsons: operatingResponse
   note over simpsons: convert %Net.HttpResponse to operatingResponse
   simpsons -->> process: operatingResponse
-  create participant processingresponse as IOP.Jokes.<br/>Messages.ProcessingResponse
+  create participant processingresponse as <<Message>><br/>IOP.Jokes.<br/>Messages.ProcessingResponse
   process ->> processingresponse: %New()
   processingresponse -->> process: processingResponse
   note over process: convert operatingResponse to processingResponse
